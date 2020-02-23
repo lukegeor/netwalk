@@ -1,3 +1,5 @@
+using System;
+
 namespace NetwalkLib
 {
     public class BoardGenerator
@@ -13,7 +15,9 @@ namespace NetwalkLib
         {
             int height = _gameConfig.Height;
             int width = _gameConfig.Width;
-            Spot[,] spots = new Spot[height, width];
+
+            Board board = new Board(height, width);
+            
             Spot[] allSpots = new Spot[height * width];
             Wall[] allWalls = new Wall[(2 * width * height) + width + height];
             int s = 0;
@@ -24,48 +28,53 @@ namespace NetwalkLib
                 {
                     Spot newSpot = new Spot(row, col, row == height / 2 && col == width / 2);
                     Wall topWall;
-                    Wall rightWall;
-                    Wall bottomWall;
                     Wall leftWall;
 
                     if (row == 0)
                     {
                         topWall = new Wall(true);
                         allWalls[w++] = topWall;
-                        topWall.Spots[SpotLocation.TopOrLeft] = null;
-                        topWall.Spots[SpotLocation.BottomOrRight] = newSpot;
+                        topWall.Spots[(int) SpotLocation.TopOrLeft] = null;
+                        topWall.Spots[(int) SpotLocation.BottomOrRight] = newSpot;
                     }
                     else
                     {
-                        topWall = spots[row - 1, col].Walls[WallLocation.Bottom];
-                        topWall.Spots[SpotLocation.BottomOrRight] = newSpot;
+                        topWall = board.Spots[row - 1, col].Walls[(int) WallLocation.Bottom];
+                        topWall.Spots[(int) SpotLocation.BottomOrRight] = newSpot;
                     }
 
-                    bottomWall = new Wall(row == height - 1);
+                    Wall bottomWall = new Wall(row == height - 1);
                     allWalls[w++] = bottomWall;
-                    bottomWall.Spots[SpotLocation.TopOrLeft] = newSpot;
+                    bottomWall.Spots[(int) SpotLocation.TopOrLeft] = newSpot;
 
                     if (col == 0)
                     {
                         leftWall = new Wall(true);
                         allWalls[w++] = leftWall;
-                        leftWall.Spots[SpotLocation.TopOrLeft] = null;
-                        leftWall.Spots[SpotLocation.BottomOrRight] = newSpot;
+                        leftWall.Spots[(int) SpotLocation.TopOrLeft] = null;
+                        leftWall.Spots[(int) SpotLocation.BottomOrRight] = newSpot;
                     }
                     else
                     {
-                        leftWall = spots[row, col - 1].Walls[WallLocation.Right];
-                        leftWall.Spots[SpotLocation.BottomOrRight] = newSpot;
+                        leftWall = board.Spots[row, col - 1].Walls[(int) WallLocation.Right];
+                        leftWall.Spots[(int) SpotLocation.BottomOrRight] = newSpot;
                     }
 
-                    rightWall = new Wall(col == width - 1);
-                    allWalls[w++]; = rightWall;
-                    rightWall.Spots[SpotLocation.TopOrLeft] = newSpot;
+                    Wall rightWall = new Wall(col == width - 1);
+                    allWalls[w++] = rightWall;
+                    rightWall.Spots[(int) SpotLocation.TopOrLeft] = newSpot;
+
+                    newSpot.Walls[(int) WallLocation.Top] = topWall;
+                    newSpot.Walls[(int) WallLocation.Right] = rightWall;
+                    newSpot.Walls[(int) WallLocation.Bottom] = bottomWall;
+                    newSpot.Walls[(int) WallLocation.Left] = leftWall;
 
                     allSpots[s++] = newSpot;
-                    spots[row, col] = newSpot;
+                    board.Spots[row, col] = newSpot;
                 }
             }
+            
+            return board;
         }
     }
 }
