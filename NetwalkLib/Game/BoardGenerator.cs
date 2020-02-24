@@ -118,6 +118,12 @@ namespace NetwalkLib
                     return false;
                 }
 
+                if (spot1.Walls.Count(w => w != null) == 1
+                    || spot2.Walls.Count(w => w != null) == 1)
+                {
+                    return false;
+                }
+
                 var wallLocation1 = Enum.GetValues(typeof(WallLocation)).Cast<WallLocation>().Single(wl => spot1.Walls[(int) wl] == wallToRemove);
                 var wallLocation2 = Enum.GetValues(typeof(WallLocation)).Cast<WallLocation>().Single(wl => spot2.Walls[(int) wl] == wallToRemove);
                 if ((4 + (int)wallLocation1 - (int)wallLocation2) % 4 != 2)
@@ -128,7 +134,10 @@ namespace NetwalkLib
                 spot1.Walls[(int)wallLocation1] = null;
                 spot2.Walls[(int)wallLocation2] = null;
                 sets[spot1].Merge(sets[spot2]);
-                sets[spot2] = sets[spot1];
+                foreach (var spot in sets[spot2])
+                {
+                    sets[spot] = sets[spot1];
+                }
                 return true;
             }
             

@@ -1,9 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace NetwalkLib
 {
-    public class Set<T>
+    public class Set<T> : IEnumerable<T>
     {
         private readonly HashSet<T> _set;
         private readonly T _representative;
@@ -14,12 +15,12 @@ namespace NetwalkLib
             _set.Add(representative);
             _representative = representative;
         }
-
+        
         public T Representative
         {
             get => _representative;
         }
-
+        
         public void Merge(Set<T> other)
         {
             foreach (var item in other._set)
@@ -29,6 +30,11 @@ namespace NetwalkLib
                     throw new InvalidOperationException("Attempted to merge non-unique item.");
                 }
             }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return _set.GetEnumerator();
         }
 
         public override bool Equals(object obj)
@@ -49,6 +55,11 @@ namespace NetwalkLib
         public override string ToString()
         {
             return _representative.ToString();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }
