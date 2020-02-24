@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Security.Principal;
 using System.Text;
 using System.Threading;
@@ -9,15 +10,22 @@ namespace NetwalkLib
     {
         private static readonly char[] _glyphs = new char[]
         {
-            (char)197,
-            (char)195,
-            (char)193,
-            (char)192,
-            (char)180,
-            179,
-            217,
-            
-            'X'
+            '┼', // 0
+            '┬', // 1
+            '┤', // 2
+            '┐', // 3
+            '┴', // 4
+            '─', // 5
+            '┘', // 6
+            '<', // 7
+            '├', // 8
+            '┌', // 9
+            '│', // 10
+            'v', // 11
+            '└', // 12
+            '>', // 13
+            '^', // 14
+            'O' // 15
         };
         private int _height;
         private int _width;
@@ -38,16 +46,8 @@ namespace NetwalkLib
             {
                 for (int col = 0; col < _width; col++)
                 {
-                    int sum = 0;
-                    sum <<= 1;
-                    sum += (Spots[row, col].Walls[(int) WallLocation.Top] != null ? 1 : 0);
-                    sum <<= 1;
-                    sum += (Spots[row, col].Walls[(int) WallLocation.Right] != null ? 1 : 0);
-                    sum <<= 1;
-                    sum += (Spots[row, col].Walls[(int) WallLocation.Bottom] != null ? 1 : 0);
-                    sum <<= 1;
-                    sum += (Spots[row, col].Walls[(int) WallLocation.Left] != null ? 1 : 0);
-                    
+                    var sum = Spots[row, col].Walls.Select((w, i) => w != null ? 1 << i : 0).Sum();
+                    s.Append(_glyphs[sum]);
                 }
                 s.Append(Environment.NewLine);
             }

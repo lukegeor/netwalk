@@ -13,7 +13,7 @@ namespace NetwalkLibTests
         public BoardGeneratorTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
-            _gameConfig = new GameConfig {Height = 5, Width = 5};
+            _gameConfig = new GameConfig {Height = 9, Width = 9};
             _boardGenerator = new BoardGenerator(_gameConfig);
         }
         
