@@ -16,6 +16,10 @@ namespace NetwalkLib
                 {
                     throw new ArgumentException($"{nameof(Width)} must be odd.", nameof(Width));
                 }
+                else if (value < 3)
+                {
+                    throw new ArgumentException($"{nameof(Width)} must be >= 3.", nameof(Width));
+                }
 
                 _width = value;
             }
@@ -29,6 +33,10 @@ namespace NetwalkLib
                 if (value % 2 == 0)
                 {
                     throw new ArgumentException($"{nameof(Height)} must be odd.", nameof(Height));
+                }
+                else if (value < 3)
+                {
+                    throw new ArgumentException($"{nameof(Height)} must be >= 3.", nameof(Height));
                 }
 
                 _height = value;

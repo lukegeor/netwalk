@@ -13,7 +13,7 @@ namespace NetwalkLibTests
         public BoardGeneratorTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
-            _gameConfig = new GameConfig {Height = 1, Width = 1};
+            _gameConfig = new GameConfig {Height = 3, Width = 3};
             _boardGenerator = new BoardGenerator(_gameConfig);
         }
         
@@ -21,9 +21,9 @@ namespace NetwalkLibTests
         public void BoardGenerator_GenerateBoard_ToString()
         {
             var board = _boardGenerator.GenerateBoard();
-            for (int row = 0; row < _gameConfig.Height; row++)
+            for (var row = 0; row < _gameConfig.Height; row++)
             {
-                for (int col = 0; col < _gameConfig.Width; col++)
+                for (var col = 0; col < _gameConfig.Width; col++)
                 {
                     _testOutputHelper.WriteLine(board.Spots[row, col].ToString());
                 }

@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace NetwalkLib
 {
     public class Spot
@@ -17,16 +19,18 @@ namespace NetwalkLib
 
         public override string ToString()
         {
-            string s = $"spot ({X}, {Y})";
+            var s = $"spot ({X}, {Y})";
             if (IsCenterSpot)
             {
                 s += " is center spot";
             }
 
+            s += $" has {Walls.Count(w => w != null)} walls";
+
             string WallReport(WallLocation wallLocation)
             {
-                string sWall = $" { wallLocation.ToString().ToLowerInvariant() } wall";
-                Wall wall = Walls[(int) wallLocation];
+                var sWall = $" { wallLocation.ToString().ToLowerInvariant() } wall";
+                var wall = Walls[(int) wallLocation];
                 
                 if (wall == null)
                 {
@@ -40,7 +44,7 @@ namespace NetwalkLib
                     }
                     sWall += " connects";
                     
-                    Spot topOrLeftSpot = wall.Spots[(int) SpotLocation.TopOrLeft];
+                    var topOrLeftSpot = wall.Spots[(int) SpotLocation.TopOrLeft];
                     if (topOrLeftSpot == null)
                     {
                         sWall += " nothing";
@@ -52,7 +56,7 @@ namespace NetwalkLib
                     
                     sWall += " with";
 
-                    Spot bottomOrRightSpot = wall.Spots[(int) SpotLocation.BottomOrRight];
+                    var bottomOrRightSpot = wall.Spots[(int) SpotLocation.BottomOrRight];
                     if (bottomOrRightSpot == null)
                     {
                         sWall += " nothing";
