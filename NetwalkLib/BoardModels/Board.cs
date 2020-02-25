@@ -10,35 +10,35 @@ namespace NetwalkLib
     {
         private static readonly char[] _glyphs = new char[]
         {
-            '┼', // 0
-            '┬', // 1
-            '┤', // 2
-            '┐', // 3
-            '┴', // 4
-            '─', // 5
-            '┘', // 6
-            '<', // 7
-            '├', // 8
-            '┌', // 9
-            '│', // 10
-            'v', // 11
-            '└', // 12
-            '>', // 13
-            '^', // 14
-            'O' // 15
+            'O', // 0
+            '^', // 1
+            '>', // 2
+            '└', // 3
+            'v', // 4
+            '│', // 5
+            '┌', // 6
+            '├', // 7
+            '<', // 8
+            '┘', // 9
+            '─', // 10
+            '┴', // 11
+            '┐', // 12
+            '┤', // 13
+            '┬', // 14
+            '┼', // 15
         };
 
         private readonly int _height;
         private readonly int _width;
-        private readonly Spot[,] _spots;
+        private readonly int[,] _spots;
 
-        public Spot[,] Spots => _spots;
+        public int[,] Spots => _spots;
 
         public int Height => _height;
         
         public int Width => _width;
 
-        internal Board(int height, int width, Spot[,] spots)
+        internal Board(int height, int width, int[,] spots)
         {
             if (spots.GetLength(0) != height)
             {
@@ -62,8 +62,7 @@ namespace NetwalkLib
             {
                 for (int col = 0; col < _width; col++)
                 {
-                    var sum = Spots[row, col].Walls.Select((w, i) => w != null ? 1 << i : 0).Sum();
-                    s.Append(_glyphs[sum]);
+                    s.Append(_glyphs[Spots[row, col]]);
                 }
                 s.Append(Environment.NewLine);
             }
