@@ -27,16 +27,32 @@ namespace NetwalkLib
             '^', // 14
             'O' // 15
         };
-        private int _height;
-        private int _width;
-        
-        public Spot[,] Spots { get; }
 
-        internal Board(int height, int width)
+        private readonly int _height;
+        private readonly int _width;
+        private readonly Spot[,] _spots;
+
+        public Spot[,] Spots => _spots;
+
+        public int Height => _height;
+        
+        public int Width => _width;
+
+        internal Board(int height, int width, Spot[,] spots)
         {
+            if (spots.GetLength(0) != height)
+            {
+                throw new ArgumentException($"{nameof(height)} does not match {nameof(spots)} height.");
+            }
+            
+            if (spots.GetLength(1) != width)
+            {
+                throw new ArgumentException($"{nameof(width)} does not match {nameof(spots)} width.");
+            }
+
             _height = height;
             _width = width;
-            Spots = new Spot[height, width];
+            _spots = spots;
         }
 
         public override string ToString()
