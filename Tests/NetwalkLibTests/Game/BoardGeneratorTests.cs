@@ -33,15 +33,19 @@ namespace NetwalkLibTests
         [Fact]
         public void BoardGenerator_GenerateBoard_Nominal()
         {
-            // Act
-            var board = _boardGenerator.GenerateBoard();
-            
-            // Assert
-            Assert.Equal(_height, board.Height);
-            Assert.Equal(_width, board.Width);
-            Assert.Equal(_width * _width, board.Spots.Length);
-            var nonNullWallsCount = board.Spots[_height / 2, _width / 2].Walls.Where(w => w != null).Count();
-            Assert.True(nonNullWallsCount <= 2);
+            for (var i = 0; i < 200; i++)
+            {
+                // Act
+                var board = _boardGenerator.GenerateBoard();
+
+                // Assert
+                Assert.Equal(_height, board.Height);
+                Assert.Equal(_width, board.Width);
+                Assert.Equal(_height * _width, board.Spots.Length);
+                var nonNullCenterSpotMovesCount = _boardGenerator.Moves(board.Spots[_height / 2, _width / 2]);
+                Assert.True(nonNullCenterSpotMovesCount >= 2);
+                Assert.True(nonNullCenterSpotMovesCount <= 3);
+            }
         }
         #endregion
     }
