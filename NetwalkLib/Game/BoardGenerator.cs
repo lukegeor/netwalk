@@ -15,12 +15,12 @@ namespace NetwalkLib
             _gameConfig = gameConfig;
         }
 
-        public Board2 GenerateBoard()
+        public Board GenerateBoard()
         {
             var height = _gameConfig.Height;
             var width = _gameConfig.Width;
 
-            var board = new Board2(height, width, new int[height, width]);
+            var board = new Board(height, width, new int[height, width]);
 
             var sets = new Dictionary<(int, int), Set<(int, int)>>();
             var removableWalls = new List<((int Row, int Col) Spot, WallLocation WallLocation)>();

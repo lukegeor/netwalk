@@ -2,6 +2,6 @@
 {
     public interface IBoardGenerator
     {
-        Board2 GenerateBoard();
+        Board GenerateBoard();
     }
 }

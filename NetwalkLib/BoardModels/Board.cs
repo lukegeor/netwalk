@@ -6,7 +6,7 @@ using System.Threading;
 
 namespace NetwalkLib
 {
-    public class Board2
+    public class Board
     {
         private static readonly char[] _glyphs = new char[]
         {
@@ -38,7 +38,7 @@ namespace NetwalkLib
         
         public int Width => _width;
 
-        internal Board2(int height, int width, int[,] spots)
+        internal Board(int height, int width, int[,] spots)
         {
             if (spots.GetLength(0) != height)
             {
