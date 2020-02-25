@@ -6,6 +6,7 @@ namespace NetwalkLib
     {
         private int _width = 3;
         private int _height = 3;
+        private int? _randomSeed;
         
         public int Width
         {
@@ -27,7 +28,7 @@ namespace NetwalkLib
 
         public int Height
         {
-            get => _width;
+            get => _height;
             set
             {
                 if (value % 2 == 0)
@@ -41,6 +42,12 @@ namespace NetwalkLib
 
                 _height = value;
             }
+        }
+
+        public int? RandomSeed
+        {
+            get => _randomSeed;
+            set => _randomSeed = value;
         }
     }
 }

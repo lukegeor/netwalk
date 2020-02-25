@@ -29,7 +29,7 @@ namespace NetwalkLibTests.Utils
         public void Set_Merge_Nominal()
         {
             // Arrange
-            Set<int> secondSet = new Set<int>(5);
+            var secondSet = new Set<int>(5);
             secondSet.Add(6);
             
             // Act
@@ -47,7 +47,7 @@ namespace NetwalkLibTests.Utils
         public void Set_Merge_DuplicateItem()
         {
             // Arrange
-            Set<int> secondSet = new Set<int>(5);
+            var secondSet = new Set<int>(5);
             secondSet.Add(1);
             
             // Act
