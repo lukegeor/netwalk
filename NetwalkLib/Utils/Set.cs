@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NetwalkLib
 {
@@ -16,9 +17,14 @@ namespace NetwalkLib
             _representative = representative;
         }
         
-        public T Representative
+        public T Representative => _representative;
+
+        public void Add(T newItem)
         {
-            get => _representative;
+            if (!_set.Add(newItem))
+            {
+                throw new InvalidOperationException("Set already contained that value.");
+            }
         }
         
         public void Merge(Set<T> other)
