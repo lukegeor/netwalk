@@ -4,10 +4,10 @@ namespace NetwalkLib
 {
     public class Spot
     {
-        public int X { get; set; }
-        public int Y { get; set; }
-        public Wall[] Walls { get; set; }
-        public bool IsCenterSpot { get; set; }
+        public int X { get; }
+        public int Y { get; }
+        public Wall[] Walls { get; }
+        public bool IsCenterSpot { get; }
 
         public Spot(int x, int y, bool isCenterSpot)
         {

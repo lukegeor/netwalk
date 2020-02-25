@@ -5,7 +5,7 @@ using NetwalkLib.Utils;
 
 namespace NetwalkLib
 {
-    public class BoardGenerator
+    public class BoardGenerator : IBoardGenerator
     {
         private readonly GameConfig _gameConfig;
 
