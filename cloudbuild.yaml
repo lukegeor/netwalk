@@ -1,0 +1,4 @@
+﻿steps:
+- name: 'mcr.microsoft.com/dotnet/core/sdk:3.1'
+  args: ['dotnet', 'publish', '-c', 'Release']
+  timeout: 180s
