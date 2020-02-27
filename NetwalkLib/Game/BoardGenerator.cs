@@ -9,10 +9,17 @@ namespace NetwalkLib
     public class BoardGenerator : IBoardGenerator
     {
         private readonly GameConfig _gameConfig;
+        private readonly Random _random;
+
+        public static int Rotate(int original)
+        {
+            return (original >> 1) | ((original & 1) << 3);
+        }
 
         public BoardGenerator(GameConfig gameConfig)
         {
             _gameConfig = gameConfig;
+            _random = gameConfig.RandomSeed.HasValue ? new Random(gameConfig.RandomSeed.Value) : new Random();
         }
 
         public Board GenerateBoard()
@@ -24,9 +31,9 @@ namespace NetwalkLib
 
             var sets = new Dictionary<(int, int), Set<(int, int)>>();
             var removableWalls = new List<((int Row, int Col) Spot, WallLocation WallLocation)>();
-            for (int row = 0; row < height; row++)
+            for (var row = 0; row < height; row++)
             {
-                for (int col = 0; col < width; col++)
+                for (var col = 0; col < width; col++)
                 {
                     sets.Add((row, col), new Set<(int, int)>((row, col)));
                     if (row < height - 1)
@@ -39,12 +46,10 @@ namespace NetwalkLib
                     }
                 }
             }
-            removableWalls.Shuffle();
-            
-            var r = new Random();
+            removableWalls = removableWalls.Shuffle();
             
             // Remove 2 or 3 walls from the center spot
-            var numWallsToRemoveFromCenterSpot = r.Next(2) == 0 ? 2 : 3;
+            var numWallsToRemoveFromCenterSpot = _random.Next(2) == 0 ? 2 : 3;
             var wallsToRemoveFromCenter = new List<WallLocation>(Enum.GetValues(typeof(WallLocation))
                 .Cast<WallLocation>())
                 .Shuffle()
@@ -97,6 +102,25 @@ namespace NetwalkLib
             
             return board;
         }
+
+        public Board RotateBoard(Board originalBoard)
+        {
+            var newSpots = new int[originalBoard.Height, originalBoard.Width];
+            Array.Copy(originalBoard.Spots, newSpots, originalBoard.Spots.Length);
+            for (var row = 0; row < originalBoard.Height; row++)
+            {
+                for (var col = 0; col < originalBoard.Width; col++)
+                {
+                    var rotates = _random.Next(4);
+                    for (var i = 0; i < rotates; i++)
+                    {
+                        newSpots[row, col] = Rotate(newSpots[row, col]);
+                    }
+                }
+            }
+            
+            return new Board(originalBoard.Height, originalBoard.Width, newSpots);
+        }
         
         private bool TryRemoveWall((int Row, int Col) spot1, WallLocation wallToRemove, IList<((int, int), WallLocation)> removableWalls, int[,] spots, Dictionary<(int, int), Set<(int, int)>> sets)
         {
@@ -130,7 +154,7 @@ namespace NetwalkLib
             return true;
         }
 
-        internal int Moves(int wallSpec)
+        internal static int Moves(int wallSpec)
         {
             var sum = 0;
             foreach (var wallLocation in (WallLocation[]) Enum.GetValues(typeof(WallLocation)))

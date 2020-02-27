@@ -1,14 +1,11 @@
 using System;
-using System.Linq;
-using System.Security.Principal;
 using System.Text;
-using System.Threading;
 
 namespace NetwalkLib
 {
     public class Board
     {
-        private static readonly char[] _glyphs = new char[]
+        private static readonly char[] Glyphs = new char[]
         {
             'O', // 0
             '^', // 1
@@ -28,15 +25,11 @@ namespace NetwalkLib
             '┼', // 15
         };
 
-        private readonly int _height;
-        private readonly int _width;
-        private readonly int[,] _spots;
+        public int[,] Spots { get; }
 
-        public int[,] Spots => _spots;
+        public int Height { get; }
 
-        public int Height => _height;
-        
-        public int Width => _width;
+        public int Width { get; }
 
         internal Board(int height, int width, int[,] spots)
         {
@@ -50,24 +43,62 @@ namespace NetwalkLib
                 throw new ArgumentException($"{nameof(width)} does not match {nameof(spots)} width.");
             }
 
-            _height = height;
-            _width = width;
-            _spots = spots;
+            Height = height;
+            Width = width;
+            Spots = spots;
         }
-
+        
         public override string ToString()
         {
-            StringBuilder s = new StringBuilder();
-            for (int row = 0; row < _height; row++)
+            var s = new StringBuilder();
+            for (var row = 0; row < Height; row++)
             {
-                for (int col = 0; col < _width; col++)
+                for (var col = 0; col < Width; col++)
                 {
-                    s.Append(_glyphs[Spots[row, col]]);
+                    if (row == Height / 2 && col == Width / 2)
+                    {
+                        s.Append('C');
+                    }
+                    else
+                    {
+                        s.Append(Glyphs[Spots[row, col]]);
+                    }
                 }
                 s.Append(Environment.NewLine);
             }
 
             return s.ToString();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is Board other))
+            {
+                return false;
+            }
+
+            if (Height != other.Height || Width != other.Width)
+            {
+                return false;
+            }
+
+            for (var row = 0; row < Height; row++)
+            {
+                for (var col = 0; col < Width; col++)
+                {
+                    if (Spots[row, col] != other.Spots[row, col])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Height, Width, Spots);
         }
     }
 }

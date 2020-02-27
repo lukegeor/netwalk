@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using NetwalkLib;
 using Xunit;
@@ -33,18 +34,40 @@ namespace NetwalkLibTests
         [Fact]
         public void BoardGenerator_GenerateBoard_Nominal()
         {
-            for (var i = 0; i < 200; i++)
+            //for (var i = 0; i < 200; i++)
             {
                 // Act
                 var board = _boardGenerator.GenerateBoard();
+                _testOutputHelper.WriteLine(board.ToString());
 
                 // Assert
                 Assert.Equal(_height, board.Height);
                 Assert.Equal(_width, board.Width);
                 Assert.Equal(_height * _width, board.Spots.Length);
-                var nonNullCenterSpotMovesCount = _boardGenerator.Moves(board.Spots[_height / 2, _width / 2]);
+                var nonNullCenterSpotMovesCount = BoardGenerator.Moves(board.Spots[_height / 2, _width / 2]);
                 Assert.True(nonNullCenterSpotMovesCount >= 2);
                 Assert.True(nonNullCenterSpotMovesCount <= 3);
+            }
+        }
+        #endregion
+        
+        #region RotateBoard
+        [Fact]
+        public void BoardGenerator_RotateBoard_Nominal()
+        {
+            // Act
+            var board = _boardGenerator.GenerateBoard();
+            var rotatedBoard = _boardGenerator.RotateBoard(board);
+            
+            // Assert
+            Assert.Equal(board.Height, rotatedBoard.Height);
+            Assert.Equal(board.Width, rotatedBoard.Width);
+            for (var row = 0; row < board.Height; row++)
+            {
+                for (var col = 0; col < board.Width; col++)
+                {
+                    Assert.Equal(BoardGenerator.Moves(board.Spots[row, col]), BoardGenerator.Moves(rotatedBoard.Spots[row, col]));
+                }
             }
         }
         #endregion
