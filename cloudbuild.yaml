@@ -6,4 +6,4 @@
   args: ['dotnet', 'test', '-c', '${_CONFIGURATION}', '-v', 'd', '--no-build']
   timeout: 180s
 substitutions:
-  _CONFIGURATION: Unknown
+  _CONFIGURATION: None
