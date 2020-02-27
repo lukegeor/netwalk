@@ -1,7 +1,9 @@
 ﻿steps:
 - name: 'mcr.microsoft.com/dotnet/core/sdk:3.1'
-  args: ['dotnet', 'publish', '-c', 'Release']
+  args: ['dotnet', 'publish', '-c', '${_CONFIGURATION}']
   timeout: 180s
 - name: 'mcr.microsoft.com/dotnet/core/sdk:3.1'
-  args: ['dotnet', 'test', '-v', 'd', '--no-build']
+  args: ['dotnet', 'test', '-c', '${_CONFIGURATION}', '-v', 'd', '--no-build']
   timeout: 180s
+substitutions:
+  _CONFIGURATION: Unknown
