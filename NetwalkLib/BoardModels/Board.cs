@@ -5,7 +5,7 @@ namespace NetwalkLib
 {
     public class Board
     {
-        private static readonly char[] Glyphs = new char[]
+        private static readonly char[] Glyphs =
         {
             'O', // 0
             '^', // 1
@@ -25,27 +25,27 @@ namespace NetwalkLib
             '┼', // 15
         };
 
-        public int[,] Spots { get; }
+        public int[,] Cells { get; }
 
         public int Height { get; }
 
         public int Width { get; }
 
-        internal Board(int height, int width, int[,] spots)
+        internal Board(int height, int width, int[,] cells)
         {
-            if (spots.GetLength(0) != height)
+            if (cells.GetLength(0) != height)
             {
-                throw new ArgumentException($"{nameof(height)} does not match {nameof(spots)} height.");
+                throw new ArgumentException($"{nameof(height)} does not match {nameof(cells)} height.");
             }
             
-            if (spots.GetLength(1) != width)
+            if (cells.GetLength(1) != width)
             {
-                throw new ArgumentException($"{nameof(width)} does not match {nameof(spots)} width.");
+                throw new ArgumentException($"{nameof(width)} does not match {nameof(cells)} width.");
             }
 
             Height = height;
             Width = width;
-            Spots = spots;
+            Cells = cells;
         }
         
         public override string ToString()
@@ -61,7 +61,7 @@ namespace NetwalkLib
                     }
                     else
                     {
-                        s.Append(Glyphs[Spots[row, col]]);
+                        s.Append(Glyphs[Cells[row, col]]);
                     }
                 }
                 s.Append(Environment.NewLine);
@@ -86,7 +86,7 @@ namespace NetwalkLib
             {
                 for (var col = 0; col < Width; col++)
                 {
-                    if (Spots[row, col] != other.Spots[row, col])
+                    if (Cells[row, col] != other.Cells[row, col])
                     {
                         return false;
                     }
@@ -98,7 +98,7 @@ namespace NetwalkLib
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Height, Width, Spots);
+            return HashCode.Combine(Height, Width, Cells);
         }
     }
 }
