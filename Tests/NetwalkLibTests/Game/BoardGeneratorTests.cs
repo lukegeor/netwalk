@@ -43,10 +43,10 @@ namespace NetwalkLibTests
                 // Assert
                 Assert.Equal(_height, board.Height);
                 Assert.Equal(_width, board.Width);
-                Assert.Equal(_height * _width, board.Spots.Length);
-                var nonNullCenterSpotMovesCount = BoardGenerator.Moves(board.Spots[_height / 2, _width / 2]);
-                Assert.True(nonNullCenterSpotMovesCount >= 2);
-                Assert.True(nonNullCenterSpotMovesCount <= 3);
+                Assert.Equal(_height * _width, board.Cells.Length);
+                var nonNullCenterCellMovesCount = BoardGenerator.Moves(board.Cells[_height / 2, _width / 2]);
+                Assert.True(nonNullCenterCellMovesCount >= 2);
+                Assert.True(nonNullCenterCellMovesCount <= 3);
             }
         }
         #endregion
@@ -66,7 +66,7 @@ namespace NetwalkLibTests
             {
                 for (var col = 0; col < board.Width; col++)
                 {
-                    Assert.Equal(BoardGenerator.Moves(board.Spots[row, col]), BoardGenerator.Moves(rotatedBoard.Spots[row, col]));
+                    Assert.Equal(BoardGenerator.Moves(board.Cells[row, col]), BoardGenerator.Moves(rotatedBoard.Cells[row, col]));
                 }
             }
         }
