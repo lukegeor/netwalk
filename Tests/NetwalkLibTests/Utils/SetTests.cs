@@ -5,7 +5,7 @@ using System.Linq;
 using NetwalkLib;
 using Xunit;
 
-namespace NetwalkLibTests.Utils
+namespace NetwalkLibTests
 {
     public class SetTests
     {
