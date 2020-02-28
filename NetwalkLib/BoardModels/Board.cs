@@ -48,6 +48,11 @@ namespace NetwalkLib
             Cells = cells;
         }
         
+        public static int Rotate(int original)
+        {
+            return (original >> 1) | ((original & 1) << 3);
+        }
+
         public override string ToString()
         {
             var s = new StringBuilder();
