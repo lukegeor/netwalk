@@ -16,5 +16,5 @@ substitutions:
   _CONFIGURATION: None
 artifacts:
   objects:
-    location: 'gs://netwalk-build-artifacts/$BUILD_ID'
-    paths: ['Tests/NetwalkLibTests/TestResults/*', 'Tests/NetwalkLibTests/TestResults/html*']
+    location: 'gs://netwalk-build-artifacts-3/$BUILD_ID'
+    paths: ['Tests/NetwalkLibTests/TestResults/*', 'Tests/NetwalkLibTests/TestResults/html/*']
