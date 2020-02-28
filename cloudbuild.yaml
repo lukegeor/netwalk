@@ -14,3 +14,7 @@
   timeout: 180s
 substitutions:
   _CONFIGURATION: None
+artifacts:
+  objects:
+    location: 'gs://netwalk-build-artifacts'
+    paths: ['Tests/NetwalkLibTests/TestResults/*']
