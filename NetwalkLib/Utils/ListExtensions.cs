@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-namespace NetwalkLib.Utils
+namespace NetwalkLib
 {
     public static class ListExtensions
     {
