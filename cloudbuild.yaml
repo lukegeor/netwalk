@@ -10,7 +10,7 @@
   timeout: 180s
 - name: 'mcr.microsoft.com/dotnet/core/sdk:3.1'
   args: ['reportgenerator', '-reports:Tests/NetwalkLibTests/TestResults/coverage.cobertura.xml', '-targetdir:Tests/NetwalkLibTests/TestResults/html', '-reporttypes:HTML']
-  env: ['PATH=$PATH:/root/.dotnet/tools']
+  env: ['PATH=$$PATH:/root/.dotnet/tools']
   timeout: 180s
 substitutions:
   _CONFIGURATION: None
