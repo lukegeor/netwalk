@@ -59,6 +59,42 @@ namespace NetwalkLibTests
         }
         #endregion
         
+        #region GetActive
+
+        public static IEnumerable<object[]> GetActiveData()
+        {
+            return new List<object[]>
+            {
+                new object[]
+                {
+                    new[,] {{2, 7, 6}, {2, 11, 12}, {11, 11, 1}},
+                    new[,] {{false, true, false}, {true, true, true},{false, false, true}}
+                },
+                new object[]
+                {
+                    new[,] {{6, 1, 7}, {3, 9, 11}, {13, 14, 8}},
+                    new[,] {{true, false, false}, {true, true, false},{false, false, false}}
+                },
+            };
+        }
+        
+        [Theory]
+        [MemberData(nameof(GetActiveData))]
+        public void Board_GetActive_Nominal(int[,] cells, bool[,] expectedActive)
+        {
+            // Arrange
+            Board board = new Board(cells.GetLength(0), cells.GetLength(1), cells);
+            
+            // Act
+            var actualActive = board.GetActive();
+            
+            // Assert
+            Assert.Collection(
+                actualActive.Cast<bool>(),
+                expectedActive.Cast<bool>().Select<bool, Action<bool>>(e => a => Assert.Equal(e, a)).ToArray());
+        }
+        #endregion
+        
         #region ToString
         [Fact]
         public void Board_ToString_Nominal()
