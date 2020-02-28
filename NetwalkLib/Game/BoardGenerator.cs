@@ -7,10 +7,6 @@ namespace NetwalkLib
 {
     public class BoardGenerator : IBoardGenerator
     {
-        public BoardGenerator()
-        {
-        }
-
         public (Board SolvedBoard, Board PlayingBoard) GenerateBoard(GameConfig gameConfig)
         {
             var random = gameConfig.RandomSeed.HasValue ? new Random(gameConfig.RandomSeed.Value) : new Random();
@@ -114,16 +110,11 @@ namespace NetwalkLib
         
         private bool TryRemoveWall((int Row, int Col) cell1, WallLocation wallToRemove, IList<((int, int), WallLocation)> removableWalls, int[,] cells, Dictionary<(int, int), Set<(int, int)>> sets)
         {
-            if (wallToRemove == WallLocation.Top || wallToRemove == WallLocation.Left)
-            {
-                throw new ArgumentException("Can't pass Top or Left to TryRemoveWall");
-            }
-
             removableWalls.Remove((cell1, wallToRemove));
             (int Row, int Col) cell2 = (cell1.Row + (wallToRemove == WallLocation.Bottom ? 1 : 0),
                 cell1.Col + (wallToRemove == WallLocation.Right ? 1 : 0));
             
-            if (Equals(sets[cell1], sets[cell2]))
+            if (sets[cell1].Equals(sets[cell2]))
             {
                 return false;
             }

@@ -3,7 +3,13 @@
   args: ['dotnet', 'publish', '-c', '${_CONFIGURATION}']
   timeout: 180s
 - name: 'mcr.microsoft.com/dotnet/core/sdk:3.1'
-  args: ['dotnet', 'test', '-c', '${_CONFIGURATION}', '-v', 'd', '--no-build']
+  args: ['dotnet', 'test', '-c', 'Debug', '-v', 'd', '/p:CollectCoverage=true', '/p:CoverletOutputFormat=cobertura', '/p:CoverletOutput=./TestResults/']
+  timeout: 180s
+- name: 'mcr.microsoft.com/dotnet/core/sdk:3.1'
+  args: ['dotnet', 'tool', 'install', '-g', 'dotnet-reportgenerator-globaltool']
+  timeout: 180s
+- name: 'mcr.microsoft.com/dotnet/core/sdk:3.1'
+  args: ['reportgenerator', '-reports:Tests/NetwalkLibTests/TestResults/coverage.cobertura.xml', '-targetdir:Tests/NetwalkLibTests/TestResults/html', '-reporttypes:HTML;']
   timeout: 180s
 substitutions:
   _CONFIGURATION: None

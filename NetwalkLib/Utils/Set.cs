@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace NetwalkLib
 {
-    public class Set<T> : IEnumerable<T>
+    public class Set<T> : IEnumerable<T> where T: IEquatable<T>
     {
         private readonly HashSet<T> _set;
         private readonly T _representative;
@@ -47,7 +47,7 @@ namespace NetwalkLib
         {
             if (obj is Set<T> typedObj)
             {
-                return object.ReferenceEquals(typedObj.Representative, _representative);
+                return _representative.Equals(typedObj.Representative);
             }
             
             return false;
