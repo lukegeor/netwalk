@@ -25,22 +25,6 @@ namespace NetwalkLib
             '┤', // 13
             '┬', // 14
             '┼', // 15
-            'Θ', // 0
-            '↑', // 1
-            '→', // 2
-            '╚', // 3
-            '↓', // 4
-            '║', // 5
-            '╔', // 6
-            '╠', // 7
-            '←', // 8
-            '╝', // 9
-            '═', // 10
-            '╩', // 11
-            '╗', // 12
-            '╣', // 13
-            '╦', // 14
-            '╬', // 15
         };
 
         public int[,] Cells { get; }
@@ -161,12 +145,11 @@ namespace NetwalkLib
         public override string ToString()
         {
             var s = new StringBuilder();
-            var active = GetActive();
             for (var row = 0; row < Height; row++)
             {
                 for (var col = 0; col < Width; col++)
                 {
-                    s.Append(Glyphs[Cells[row, col] | (active[row, col] ? 16 : 0 )]);
+                    s.Append(Glyphs[Cells[row, col]]);
                 }
                 s.Append(Environment.NewLine);
             }
