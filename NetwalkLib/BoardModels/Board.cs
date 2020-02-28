@@ -5,7 +5,7 @@ namespace NetwalkLib
 {
     public class Board
     {
-        private static readonly char[] Glyphs =
+        internal static readonly char[] Glyphs =
         {
             'O', // 0
             '^', // 1
@@ -33,14 +33,24 @@ namespace NetwalkLib
 
         internal Board(int height, int width, int[,] cells)
         {
+            if (height % 2 == 0 || height < 3)
+            {
+                throw new ArgumentException($"{nameof(height)} must be an odd number >= 3.", nameof(height));
+            }
+            
+            if (width % 2 == 0 || width < 3)
+            {
+                throw new ArgumentException($"{nameof(width)} must be an odd number >= 3.", nameof(width));
+            }
+            
             if (cells.GetLength(0) != height)
             {
-                throw new ArgumentException($"{nameof(height)} does not match {nameof(cells)} height.");
+                throw new ArgumentException($"{nameof(height)} does not match {nameof(cells)} height.", nameof(height));
             }
             
             if (cells.GetLength(1) != width)
             {
-                throw new ArgumentException($"{nameof(width)} does not match {nameof(cells)} width.");
+                throw new ArgumentException($"{nameof(width)} does not match {nameof(cells)} width.", nameof(width));
             }
 
             Height = height;
@@ -48,6 +58,11 @@ namespace NetwalkLib
             Cells = cells;
         }
         
+        public static int Rotate(int original)
+        {
+            return (original >> 1) | ((original & 1) << 3);
+        }
+
         public override string ToString()
         {
             var s = new StringBuilder();
@@ -55,14 +70,7 @@ namespace NetwalkLib
             {
                 for (var col = 0; col < Width; col++)
                 {
-                    if (row == Height / 2 && col == Width / 2)
-                    {
-                        s.Append('C');
-                    }
-                    else
-                    {
-                        s.Append(Glyphs[Cells[row, col]]);
-                    }
+                    s.Append(Glyphs[Cells[row, col]]);
                 }
                 s.Append(Environment.NewLine);
             }

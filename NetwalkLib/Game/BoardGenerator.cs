@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
 using NetwalkLib.Utils;
 
@@ -8,24 +7,11 @@ namespace NetwalkLib
 {
     public class BoardGenerator : IBoardGenerator
     {
-        private readonly GameConfig _gameConfig;
-        private readonly Random _random;
-
-        public static int Rotate(int original)
+        public (Board SolvedBoard, Board PlayingBoard) GenerateBoard(GameConfig gameConfig)
         {
-            return (original >> 1) | ((original & 1) << 3);
-        }
-
-        public BoardGenerator(GameConfig gameConfig)
-        {
-            _gameConfig = gameConfig;
-            _random = gameConfig.RandomSeed.HasValue ? new Random(gameConfig.RandomSeed.Value) : new Random();
-        }
-
-        public Board GenerateBoard()
-        {
-            var height = _gameConfig.Height;
-            var width = _gameConfig.Width;
+            var random = gameConfig.RandomSeed.HasValue ? new Random(gameConfig.RandomSeed.Value) : new Random();
+            var height = gameConfig.Height;
+            var width = gameConfig.Width;
 
             var board = new Board(height, width, new int[height, width]);
 
@@ -49,7 +35,7 @@ namespace NetwalkLib
             removableWalls = removableWalls.Shuffle();
             
             // Remove 2 or 3 walls from the center cell
-            var numWallsToRemoveFromCenterCell = _random.Next(2) == 0 ? 2 : 3;
+            var numWallsToRemoveFromCenterCell = random.Next(2) == 0 ? 2 : 3;
             var wallsToRemoveFromCenter = new List<WallLocation>(Enum.GetValues(typeof(WallLocation))
                 .Cast<WallLocation>())
                 .Shuffle()
@@ -100,10 +86,10 @@ namespace NetwalkLib
                 }
             }
             
-            return board;
+            return (board, RotateBoard(board, random));
         }
 
-        public Board RotateBoard(Board originalBoard)
+        private Board RotateBoard(Board originalBoard, Random random)
         {
             var newCells = new int[originalBoard.Height, originalBoard.Width];
             Array.Copy(originalBoard.Cells, newCells, originalBoard.Cells.Length);
@@ -111,10 +97,10 @@ namespace NetwalkLib
             {
                 for (var col = 0; col < originalBoard.Width; col++)
                 {
-                    var rotates = _random.Next(4);
+                    var rotates = random.Next(4);
                     for (var i = 0; i < rotates; i++)
                     {
-                        newCells[row, col] = Rotate(newCells[row, col]);
+                        newCells[row, col] = Board.Rotate(newCells[row, col]);
                     }
                 }
             }
@@ -124,16 +110,11 @@ namespace NetwalkLib
         
         private bool TryRemoveWall((int Row, int Col) cell1, WallLocation wallToRemove, IList<((int, int), WallLocation)> removableWalls, int[,] cells, Dictionary<(int, int), Set<(int, int)>> sets)
         {
-            if (wallToRemove == WallLocation.Top || wallToRemove == WallLocation.Left)
-            {
-                throw new ArgumentException("Can't pass Top or Left to TryRemoveWall");
-            }
-
             removableWalls.Remove((cell1, wallToRemove));
             (int Row, int Col) cell2 = (cell1.Row + (wallToRemove == WallLocation.Bottom ? 1 : 0),
                 cell1.Col + (wallToRemove == WallLocation.Right ? 1 : 0));
             
-            if (Equals(sets[cell1], sets[cell2]))
+            if (sets[cell1].Equals(sets[cell2]))
             {
                 return false;
             }

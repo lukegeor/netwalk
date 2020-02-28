@@ -2,7 +2,6 @@
 {
     public interface IBoardGenerator
     {
-        Board GenerateBoard();
-        Board RotateBoard(Board originalBoard);
+        (Board SolvedBoard, Board PlayingBoard) GenerateBoard(GameConfig gameConfig);
     }
 }
