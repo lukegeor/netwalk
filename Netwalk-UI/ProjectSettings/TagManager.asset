@@ -44,3 +44,9 @@ TagManager:
   - name: Background
     uniqueID: 1010942251
     locked: 0
+  - name: Cells
+    uniqueID: 3412537655
+    locked: 0
+  - name: Buttons
+    uniqueID: 3421610923
+    locked: 0
