@@ -8,4 +8,6 @@ jobs:
         run: echo Hello Random Message!
       - name: Check Title
         if: (!(startsWith(github.context.payload.pull_request.title, 'NW-')))
-        run: exit 1
+        run: |
+          echo Title was ${{ github.context.payload.pull_request.title }}
+          exit 1
