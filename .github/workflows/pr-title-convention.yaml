@@ -6,11 +6,6 @@ jobs:
     steps:
       - name: Print Random Message
         run: echo Hello Random Message!
-      - name: Print PR Title
-        env:
-          TITLE: ${{ github.event.pull_request.title }}
-        run: echo PR Title is $TITLE
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$GITHUB_CONTEXT"
+      - name: Check Title
+        if: (!(startsWith(github.event.pull_request.title, 'NW-')))
+        run: exit 1
