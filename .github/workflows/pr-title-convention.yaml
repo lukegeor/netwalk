@@ -6,8 +6,5 @@ jobs:
     steps:
       - name: Print Random Message
         run: echo Hello Random Message!
-      - name: Check Title
-        if: (!(startsWith(github.context.payload.pull_request.title, 'NW-')))
-        run: |
-          echo Title was ${{ github.context.payload.pull_request.title }}
-          exit 1
+      - name: Print GitHub object
+        run: echo ${{ toJson(github) }}
