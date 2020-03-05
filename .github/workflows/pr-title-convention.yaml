@@ -1,0 +1,8 @@
+name: Check PR Title
+on: [pull_request]
+jobs:
+  check_title:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Print Random Message
+        run: echo Hello Random Message!
