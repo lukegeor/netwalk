@@ -14,7 +14,7 @@
    viewBox="0 0 200 200"
    version="1.1"
    id="svg8"
-   inkscape:version="0.92.4 (5da689c313, 2019-01-14)"
+   inkscape:version="0.48.4 r9939"
    sodipodi:docname="5.svg">
   <defs
      id="defs2" />
@@ -33,10 +33,10 @@
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1920"
-     inkscape:window-height="1027"
-     inkscape:window-x="1912"
-     inkscape:window-y="410"
+     inkscape:window-width="1858"
+     inkscape:window-height="1057"
+     inkscape:window-x="54"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1" />
   <metadata
      id="metadata5">
@@ -46,7 +46,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -55,6 +55,13 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-97)">
+    <rect
+       style="fill:#999999;fill-opacity:1;fill-rule:nonzero;stroke:none"
+       id="rect2984"
+       width="200"
+       height="200"
+       x="0"
+       y="97" />
     <rect
        style="fill:#000000;fill-opacity:1;stroke-width:0.21600997"
        id="border"
