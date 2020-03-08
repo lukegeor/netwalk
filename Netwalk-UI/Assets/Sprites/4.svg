@@ -66,13 +66,13 @@
     <path
        style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        d="m 150,247 -30,0 0,50 -40.000006,0 0,-50 -29.999995,0 0,-100 L 150,147 z"
-       id="rect3045"
+       id="border"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccc" />
     <path
        style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        d="m 145,242 -30,0 0,55 -30.000006,0 0,-55 -29.999996,0 0,-90 L 145,152 z"
-       id="rect3045-1"
+       id="middle"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccc" />
   </g>

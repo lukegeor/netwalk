@@ -26,7 +26,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="410.88234"
+     inkscape:cx="254.88234"
      inkscape:cy="338.03006"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
@@ -66,13 +66,13 @@
     <path
        style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        d="m 50,247 0,-30 -50,0 0,-40.00001 50,0 L 50,147 l 100,0 0,100 z"
-       id="rect3045"
+       id="border"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccc" />
     <path
        style="fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none"
        d="m 55,242 0,-30 -55,0 0,-30 55,0 0,-30 90,0 0,90 z"
-       id="rect3045-1"
+       id="middle"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccc" />
   </g>

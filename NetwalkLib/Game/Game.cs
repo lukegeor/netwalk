@@ -2,7 +2,7 @@
 
 namespace NetwalkLib
 {
-    public class Game
+    public class Game : IGame
     {
         public DateTime StartTime { get; }
 

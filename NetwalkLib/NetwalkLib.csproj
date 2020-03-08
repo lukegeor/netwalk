@@ -7,5 +7,13 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.0" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <FilesToCopyToUnity Include="$(PublishDir)NetwalkLib.dll;$(PublishDir)Microsoft.Bcl.HashCode.dll"/>
+  </ItemGroup>
+  
+  <Target Name="CopyToUnity" AfterTargets="Publish">
+    <Copy SourceFiles="@(FilesToCopyToUnity)" DestinationFolder="$(MSBuildProjectDirectory)/../Netwalk-UI/Assets" />
+  </Target>
 
 </Project>
