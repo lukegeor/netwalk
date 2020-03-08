@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
-using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 using NetwalkLib;
 
@@ -75,8 +71,8 @@ public class TileBackgroundScript : MonoBehaviour
     {
         _gameConfig = new GameConfig
         {
-            Height = 5,
-            Width = 5
+            Height = 21,
+            Width = 21
         };
         var boardGenerator = new BoardGenerator();
         _game = new Game(boardGenerator, _gameConfig);
