@@ -352,3 +352,6 @@ MigrationBackup/
 # Rider
 .idea
 
+# Unity Imported dlls
+Netwalk-UI/Assets/*.dll
+Netwalk-UI/Assets/*.dll.meta
