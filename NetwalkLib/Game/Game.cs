@@ -4,12 +4,12 @@ namespace NetwalkLib
 {
     public class Game : IGame
     {
+        private bool _won;
+
         public DateTime StartTime { get; }
 
         public Board SolvedBoard { get; }
         public Board PlayingBoard { get; }
-
-        public bool _won;
 
         public event EventHandler<GameWonEventArgs> GameWonEvent;
         

@@ -14,7 +14,7 @@ namespace NetwalkLibTests
         private readonly Game _game;
         private readonly Mock<IBoardGenerator> _boardGenerator;
         private readonly IFixture _fixture;
-        private bool _gameWon = false;
+        private bool _gameWon;
         
         public GameTests()
         {
@@ -27,6 +27,7 @@ namespace NetwalkLibTests
                     new Board(3, 3, new[,] {{9, 9, 9}, {9, 9, 9}, {9, 9, 9}}),
                     new Board(3, 3, new[,] {{3, 3, 3}, {3, 3, 3}, {3, 3, 3}})));
             _game = _fixture.Create<Game>();
+            _gameWon = false;
             _game.GameWonEvent += GameWon;
         }
         
