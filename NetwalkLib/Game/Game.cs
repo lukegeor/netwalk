@@ -32,7 +32,19 @@ namespace NetwalkLib
 
         private bool CheckForWin()
         {
-            return SolvedBoard.Equals(PlayingBoard);
+            var active= PlayingBoard.GetActive();
+            for (var row = 0; row < active.GetLength(0); row++)
+            {
+                for (var col = 0; col < active.GetLength(1); col++)
+                {
+                    if (!active[row, col])
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
         }
     }
 }
