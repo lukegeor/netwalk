@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using NetwalkLib;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TileBackgroundScript : MonoBehaviour
 {
@@ -10,12 +12,14 @@ public class TileBackgroundScript : MonoBehaviour
 
     private Camera _mainCamera;
     private GameObject _txtYouWon;
+    private GameObject _txtBoardSize;
     private float _backgroundX;
     private float _backgroundY;
     private float _backgroundHeight;
     private float _backgroundWidth;
     private float _cellSpriteHeight;
     private float _cellSpriteWidth;
+    private int _nextGameBoardSize;
 
     private GameConfig _gameConfig;
     private IBoardGenerator _boardGenerator;
@@ -32,6 +36,14 @@ public class TileBackgroundScript : MonoBehaviour
         ResizeBackgroundSpriteToScreen();
         GenerateLongLivedObjects();
         NewGame();
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     public void RotateCell((int Row, int Col) data)
@@ -57,9 +69,29 @@ public class TileBackgroundScript : MonoBehaviour
         NewGame();
     }
 
+    public void OnSliderChange(float newValue)
+    {
+        SetNextBoardSize(3 + 2 * Convert.ToInt32(newValue + 0.1f));
+    }
+
+    private void SetNextBoardSize(int newSize)
+    {
+        _nextGameBoardSize = newSize;
+        if (_txtBoardSize == null)
+        {
+            _txtBoardSize = Resources.FindObjectsOfTypeAll<GameObject>().FirstOrDefault(o => o.name == "txtBoardSize");
+        }
+
+        if (_txtBoardSize != null)
+        {
+            _txtBoardSize.GetComponent<Text>().text = $"{newSize}x{newSize}";
+        }
+    }
+    
     private void NewGame()
     {
         DestroyOldGame();
+        ResetGameSize();
         CreateGame();
         LayoutBoardPieces();
     }
@@ -86,12 +118,21 @@ public class TileBackgroundScript : MonoBehaviour
 
     private void GenerateLongLivedObjects()
     {
+        if (_nextGameBoardSize == 0)
+        {
+            _nextGameBoardSize = 5;
+        }
+        _boardGenerator = new BoardGenerator();
+        ResetGameSize();
+    }
+
+    private void ResetGameSize()
+    {
         _gameConfig = new GameConfig
         {
-            Height = 5,
-            Width = 5
+            Height = _nextGameBoardSize,
+            Width = _nextGameBoardSize
         };
-        _boardGenerator = new BoardGenerator();
         _cellSpriteHeight = _backgroundHeight / _gameConfig.Height;
         _cellSpriteWidth = _backgroundWidth / _gameConfig.Width;
         _cellObjects = new (GameObject, bool)[_gameConfig.Height, _gameConfig.Width];
