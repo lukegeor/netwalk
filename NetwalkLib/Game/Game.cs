@@ -4,6 +4,8 @@ namespace NetwalkLib
 {
     public class Game : IGame
     {
+        private bool _won;
+
         public DateTime StartTime { get; }
 
         public Board SolvedBoard { get; }
@@ -15,14 +17,16 @@ namespace NetwalkLib
         {
             StartTime = DateTime.UtcNow;
             (SolvedBoard, PlayingBoard) = boardGenerator.GenerateBoard(gameConfig);
+            _won = false;
         }
 
         public void RotateCell(int row, int col)
         {
             PlayingBoard.Cells[row, col] = Board.Rotate(PlayingBoard.Cells[row, col]);
-            if (CheckForWin())
+            if (!_won && CheckForWin())
             {
                 GameWonEvent?.Invoke(this, new GameWonEventArgs(DateTime.UtcNow - StartTime));
+                _won = true;
             }
         }
 
