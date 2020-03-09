@@ -47,6 +47,9 @@ TagManager:
   - name: Cells
     uniqueID: 3412537655
     locked: 0
-  - name: Buttons
+  - name: SpinningCells
     uniqueID: 3421610923
+    locked: 0
+  - name: Buttons
+    uniqueID: 4206644835
     locked: 0
