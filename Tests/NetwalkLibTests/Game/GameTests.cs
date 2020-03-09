@@ -79,15 +79,21 @@ namespace NetwalkLibTests
         [Fact]
         public void Game_RotateCell_GameWon()
         {
+            // Arrange
+            _game.GameWonEvent -= GameWon;
+            _boardGenerator.Reset();
+            _boardGenerator
+                .Setup(bg => bg.GenerateBoard(It.IsAny<GameConfig>()))
+                .Returns((
+                    new Board(3, 3, new[,] {{9, 9, 9}, {9, 9, 9}, {9, 9, 9}}),
+                    new Board(3, 3, new[,] {{6, 14, 8}, {5, 7, 8}, {1, 3, 1}})));
+
+            var game = new Game(_boardGenerator.Object, new GameConfig{ Height = 3, Width = 3});
+            game.GameWonEvent += GameWon;
+            Assert.False(_gameWon);
+            
             // Act
-            for (var row = 0; row < _game.PlayingBoard.Height; row++)
-            {
-                for (var col = 0; col < _game.PlayingBoard.Width; col++)
-                {
-                    Assert.False(_gameWon);
-                    _game.RotateCell(row, col);
-                }
-            }
+            game.RotateCell(2, 2);
             
             // Assert
             Assert.True(_gameWon);
