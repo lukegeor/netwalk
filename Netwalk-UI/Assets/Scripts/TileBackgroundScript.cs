@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using NetwalkLib;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TileBackgroundScript : MonoBehaviour
@@ -201,11 +200,11 @@ public class TileBackgroundScript : MonoBehaviour
         }
         _game = new Game(_boardGenerator, _gameConfig);
         _game.GameWonEvent += GameWon;
-        SetWonActive(false);
+        SetWonActive(false, TimeSpan.Zero);
         Debug.Log(_game.SolvedBoard.ToString());
     }
 
-    private void SetWonActive(bool active)
+    private void SetWonActive(bool active, TimeSpan winTime)
     {
         if (_txtYouWon == null)
         {
@@ -214,13 +213,25 @@ public class TileBackgroundScript : MonoBehaviour
 
         if (_txtYouWon != null)
         {
+            if (active)
+            {
+                var textComponent = _txtYouWon.GetComponent<Text>();
+                var oldText = textComponent.text;
+                var oldFirstLine = oldText.Split(System.Environment.NewLine.ToCharArray());
+                var newText = oldFirstLine[0] + System.Environment.NewLine + winTime.ToString(
+                    winTime >= TimeSpan.FromHours(1) ? @"hh\:mm\:ss\.fff" :
+                    (winTime >= TimeSpan.FromMinutes(1) ? @"mm\:ss\.fff" :
+                    @"ss\.fff"));
+                textComponent.text = newText;
+            }
+
             _txtYouWon.SetActive(active);
         }
     }
 
     private void GameWon(object sender, GameWonEventArgs eventArgs)
     {
-        SetWonActive(true);
+        SetWonActive(true, eventArgs.WinTime);
     }
 
     private void ResizeBackgroundSpriteToScreen()
