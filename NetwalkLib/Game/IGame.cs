@@ -8,6 +8,7 @@ namespace NetwalkLib
         Board SolvedBoard { get; }
         Board PlayingBoard { get; }
         event EventHandler<GameWonEventArgs> GameWonEvent;
+        void StartGame();
         void RotateCell(int row, int col);
     }
 }

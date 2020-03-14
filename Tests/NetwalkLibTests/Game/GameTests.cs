@@ -27,6 +27,7 @@ namespace NetwalkLibTests
                     new Board(3, 3, new[,] {{9, 9, 9}, {9, 9, 9}, {9, 9, 9}}),
                     new Board(3, 3, new[,] {{3, 3, 3}, {3, 3, 3}, {3, 3, 3}})));
             _game = _fixture.Create<Game>();
+            _game.StartGame();
             _gameWon = false;
             _game.GameWonEvent += GameWon;
         }
@@ -89,6 +90,7 @@ namespace NetwalkLibTests
                     new Board(3, 3, new[,] {{6, 14, 8}, {5, 7, 8}, {1, 3, 1}})));
 
             var game = new Game(_boardGenerator.Object, new GameConfig{ Height = 3, Width = 3});
+            game.StartGame();
             game.GameWonEvent += GameWon;
             Assert.False(_gameWon);
             

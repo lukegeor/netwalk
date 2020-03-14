@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using NetwalkLib;
+using TMPro.EditorUtilities;
 using UnityEngine.UI;
 
 public class TileBackgroundScript : MonoBehaviour
@@ -201,6 +202,7 @@ public class TileBackgroundScript : MonoBehaviour
         _game = new Game(_boardGenerator, _gameConfig);
         _game.GameWonEvent += GameWon;
         SetWonActive(false, TimeSpan.Zero);
+        _game.StartGame();
         Debug.Log(_game.SolvedBoard.ToString());
     }
 
