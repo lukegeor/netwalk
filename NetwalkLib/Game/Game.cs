@@ -5,19 +5,28 @@ namespace NetwalkLib
     public class Game : IGame
     {
         private bool _won;
+        private IBoardGenerator _boardGenerator;
+        private GameConfig _gameConfig;
 
-        public DateTime StartTime { get; }
+        public DateTime StartTime { get; private set; }
 
-        public Board SolvedBoard { get; }
-        public Board PlayingBoard { get; }
+        public Board SolvedBoard { get; private set; }
+        
+        public Board PlayingBoard { get; private set; }
 
         public event EventHandler<GameWonEventArgs> GameWonEvent;
         
         public Game(IBoardGenerator boardGenerator, GameConfig gameConfig)
         {
-            StartTime = DateTime.UtcNow;
-            (SolvedBoard, PlayingBoard) = boardGenerator.GenerateBoard(gameConfig);
+            _boardGenerator = boardGenerator;
+            _gameConfig = gameConfig;
             _won = false;
+        }
+
+        public void StartGame()
+        {
+            (SolvedBoard, PlayingBoard) = _boardGenerator.GenerateBoard(_gameConfig);
+            StartTime = DateTime.UtcNow;
         }
 
         public void RotateCell(int row, int col)
