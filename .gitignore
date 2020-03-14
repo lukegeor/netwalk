@@ -351,3 +351,5 @@ MigrationBackup/
 
 # Rider
 .idea
+
+netwalk_upload.keystore
