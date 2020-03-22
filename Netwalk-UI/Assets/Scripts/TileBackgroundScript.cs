@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using NetwalkLib;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TileBackgroundScript : MonoBehaviour
@@ -41,7 +42,7 @@ public class TileBackgroundScript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Application.Quit();
+            SceneManager.LoadSceneAsync("Scenes/GPG");
         }
     }
 
