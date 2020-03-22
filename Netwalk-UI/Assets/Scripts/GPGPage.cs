@@ -18,12 +18,19 @@ public class GPGPage : MonoBehaviour
     void Start()
     {
         txtLogin = GameObject.Find("txtLogin").GetComponent<Text>();
+        Debug.Log("1");
         cnv = GameObject.Find("Canvas").GetComponent<Canvas>();
+        Debug.Log("2");
         userImagePrefab = Resources.Load<GameObject>("OtherPrefabs/imgUser");
+        Debug.Log("3");
         
         // Select the Google Play Games platform as our social platform implementation
+        GooglePlayGames.PlayGamesPlatform.DebugLogEnabled = true;
+        Debug.Log("4");
         GooglePlayGames.PlayGamesPlatform.Activate();
+        Debug.Log("5");
         SetLoginInfo(false);
+        Debug.Log("6");
     }
 
     void Update()
@@ -59,24 +66,34 @@ public class GPGPage : MonoBehaviour
     private void SetLoginInfo(bool forceSignOut)
     {
         var userImage = GameObject.Find(USER_IMAGE_NAME);
+        Debug.Log("20");
         if (userImage != null)
         {
+            Debug.Log("21");
             Destroy(userImage);
+            Debug.Log("22");
         }
 
         if (Social.localUser.authenticated && !forceSignOut)
         {
             txtLogin.text = SIGN_OUT;
+            Debug.Log("10");
             if (Social.localUser.image != null)
             {
-
+                Debug.Log("11");
                 userImage = Instantiate(userImagePrefab, cnv.transform);
+                Debug.Log("11a");
+                userImage.name = USER_IMAGE_NAME;
+                Debug.Log("12");
                 userImage.GetComponent<RawImage>().texture = Social.localUser.image;
+                Debug.Log("13");
             }
         }
         else
         {
-            txtLogin.text = SIGN_OUT;
+            Debug.Log("14");
+            txtLogin.text = SIGN_IN;
+            Debug.Log("15");
         }
     }
 }
